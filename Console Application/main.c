@@ -1,13 +1,23 @@
 #include <stdio.h>
 
 int main() {
-    char number1[1], number2[1], number3[1];
+    int dig1, dig2, dig3,octazahl, z1,z2,z3;
 
-    scanf("%c", &number1);
-    scanf(" %c", &number2);
-    scanf("  %c", &number3); /* The leading whitespace ensures it's the
-                          previous newline is ignored */
-    printf("number1: %c, number2: %c, number3: %c\n", number1, number2, number3);
+    scanf("%1d%1d%1d", &dig1, &dig2, &dig3);
+
+
+    if(dig1<8&&dig2<8&&dig3<8)
+     octazahl=dig1 * 8 * 8 + dig2 * 8 + dig3 * 1;
+    printf(": dec.:%d\n", octazahl);
+
+    z1=octazahl%10;
+    octazahl/=10;
+    z2=octazahl%10;
+    octazahl/=10;
+    z3=octazahl%10;
+
+
+    printf("ZS: %d",z1+z2+z3);
 
 
 
