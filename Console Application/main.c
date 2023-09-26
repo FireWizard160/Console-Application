@@ -1,38 +1,51 @@
 #include <stdio.h>
 
 int main() {
-    int z1,z2,z3,z4,z5,max,min,summe1,summe2,summe3,summe4,summe5;
-
-    scanf("%d %d %d %d %d",&z1,&z2,&z3,&z4,&z5);
-    summe1 = z1 + z2 + z3 + z4;
-    summe2 = z2 + z3 + z4 + z5;
-    summe3 = z1 + z3 + z4 + z5;
-    summe4 = z1 + z2 + z4 + z5;
-    summe5 = z1 + z2 + z3 + z5;
-    min = summe1;
-    max = summe1;
-
-    if(min > summe2)
-        min = summe2;
-    if(min > summe3)
-        min = summe3;
-    if(min > summe4)
-        min = summe4;
-    if(min > summe5)
-        min = summe5;
+int noten, noten2, n1, n2, n3;
 
 
+    scanf("%d", &noten);
+    noten2 = noten;
 
-    if(max < summe2)
-        max = summe2;
-    if(max < summe3)
-        max = summe3;
-    if(max < summe4)
-        max = summe4;
-    if(max < summe5)
-        max = summe5;
-printf(": minimum sum: %d\n",min);
-printf("maximum sum: %d\n",max);
+printf("Noten: ");
+
+if(noten > 999 || noten < 111 ){
+    printf("Erwarte genau 3 Noten!\n");
+return 0;
+    }
+
+    n1 = noten % 10;
+    noten /= 10;
+    n2 = noten % 10;
+    noten /= 10;
+    n3 = noten % 10;
+
+
+if (n3 > 3 || n3 < 1) {
+    printf("Erste Note muss zwischen 1 und 5 liegen!\n");
+    return 0;
+}
+
+if (n2 > 5 || n2 < 1){
+    printf("Zweite Note muss zwischen 1 und 5 liegen!\n");
+    return 0;
+}
+if (n1 > 5 || n1 < 1){
+    printf("Dritte Note muss zwischen 1 und 5 liegen!\n");
+    return 0;
+}
+
+if ( n1 == 5 || n2 == 5 || n3 == 5 )
+    printf("Nicht bestanden!\n");
+
+else if ( n1 == 1 && n2 == 1 && n3 == 1 )
+    printf("Ausgezeichneter Erfolg!\n");
+
+else if ( noten2 == 211 || noten2 == 121 || noten2 == 112 )
+    printf("Guter Erfolg!\n");
+
+else printf("Bestanden.\n");
+
 return 0;
 }
 
