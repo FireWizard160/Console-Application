@@ -1,29 +1,43 @@
 #include <stdio.h>
 
+
 int main() {
+    float min, max, cnt, avg, wert, sum;
 
-    int days, start, i,j;
 
 
-    printf("number of days in month: ");
-    scanf("%d",&days);
-    printf("starting day of week (1=Monday, 7=Sunday): ");
-    scanf("%d",&start);
-    printf("\n");
-    for (j = 1; j < start ;j++) {
-        printf("   ");
+    do {
 
-    }
 
-    for (i = 1; i <= days; i++, start++) {
 
-        printf("%2d ", i);
-        if (start == 7) {
-            printf("\n");
-            start = start - 7;
+        printf(": ");
+        scanf("%f.2", &wert);
+        if (wert <= 0 ) {
+            printf("no number entered");
         }
-    }
-    printf("\n");
+
+        if (wert < min)
+            min = wert;
+        if (wert > max)
+            max = wert;
+
+
+        sum = sum + wert;
+        cnt++;
+
+
+
+
+    } while (wert > 0);
+
+
+    avg = sum / cnt;
+
+    printf("cnt: %f\n", cnt);
+    printf("min: %.2f\n", min);
+    printf("max: %.2f\n", max);
+    printf("avg: %.2f\n", avg);
+
 
     return 0;
 }
