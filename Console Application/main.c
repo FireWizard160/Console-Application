@@ -1,19 +1,21 @@
 #include <stdio.h>
+#include <float.h>
 
 
 int main() {
-    float min, max, cnt, avg, wert, sum;
-
+    double min = DBL_MAX, max = DBL_MIN, avg, wert, sum;
+    int cnt = 0;
 
 
     do {
 
 
-
         printf(": ");
-        scanf("%f.2", &wert);
-        if (wert <= 0 ) {
-            printf("no number entered");
+        scanf("%lf.2", &wert);
+        if (wert <= 0) {
+
+
+            break;
         }
 
         if (wert < min)
@@ -22,10 +24,8 @@ int main() {
             max = wert;
 
 
-        sum = sum + wert;
+        sum += wert;
         cnt++;
-
-
 
 
     } while (wert > 0);
@@ -33,10 +33,15 @@ int main() {
 
     avg = sum / cnt;
 
-    printf("cnt: %f\n", cnt);
-    printf("min: %.2f\n", min);
-    printf("max: %.2f\n", max);
-    printf("avg: %.2f\n", avg);
+    if (cnt == 0) {
+        printf("no number entered");
+        return 0;
+    }
+
+    printf("cnt: %d\n", cnt);
+    printf("min: %.2lf\n", min);
+    printf("max: %.2lf\n", max);
+    printf("avg: %.2lf\n", avg);
 
 
     return 0;
