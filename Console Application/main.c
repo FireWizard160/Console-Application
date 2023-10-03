@@ -4,63 +4,71 @@
 
 int main() {
     int eingabe, cntE, cntA;
-    double guthaben = 100, brutto, netto, steuer, steuerges, steuerfrei, avgA, avgE, betrag;
+    double guthaben = 100, brutto, netto, steuer, steuerges, steuerfrei, avgA, avgE, betrag, ages, eges;
 
 
     do {
 
         printf("Typ:");
-        scanf("%.2lf", &eingabe);
-        printf("Betrag in Euro: ");
-        scanf("2.lf", &betrag);
+        scanf("%d", &eingabe);
 
-        if (eingabe < 0)
+        if (eingabe != '=') {
+            printf("Betrag in Euro:\n");
+            scanf("2.lf", &betrag);
+        }
+        if (betrag < 0) {
             printf("Der Betrag kann nicht negativ sein");
-
+        }
 
 
         switch (eingabe) {
             case 'e':
 
-                if (betrag <= 20)
+                if (betrag <= 20) {
                     guthaben = +betrag;
-                if (betrag > 20 && betrag <= 50)
+                }
+
+                if (betrag > 20 && betrag <= 50) {
                     steuer = (betrag - 20) * 0.1;
-                steuerges = +steuer;
-                guthaben = +eingabe;
+                    steuerges = +steuer;
+                    guthaben = +betrag;
+                }
 
-                if (eingabe > 50 && eingabe <= 200)
+                if (betrag > 50 && betrag <= 200) {
                     guthaben = +20;
-                steuer = (eingabe - 200) * 0.2;
+                    steuer = (betrag - 70) * 0.2;
+                    steuer =+ 30*0.1;
 
-                steuerges = +steuer;
-                steuer = (eingabe - 20) * 0.1;
-                steuerges = +steuer;
-                guthaben = +eingabe;
-
-                if (eingabe > 200)
-                    steuer = (eingabe - 50) * 0.2;
-
-                steuerges = +steuer;
-                steuer = (eingabe - 20) * 0.1;
-                steuerges = +steuer;
-                guthaben = +eingabe;
+                    steuerges = +steuer;
+                    guthaben = +betrag;
+                }
+                if (eingabe > 200) {
+                    guthaben = +20;
+                    steuer = +30 * 0.1;
+                    steuer = +130 * 0.2;
+                    steuer =+ (betrag-130)*0.4;
 
 
-                cntE++;
+                }
+                    eges = eges + eingabe - steuer;
+                    cntE++;
 
                 break;
             case 's':
+
+
                 guthaben = +betrag;
+                printf("Guthaben: %d",guthaben);
 
-
+                avgE = avgE + eingabe;
                 cntE++;
                 break;
             case 'k':
-                if (eingabe > guthaben)
+                if (betrag > guthaben)
                     printf("Diese Kosten können nicht bezahlt werden");
 
 
+                ages = ages + eingabe;
                 cntA++;
                 break;
             case '=':
@@ -71,8 +79,13 @@ int main() {
 
     } while (eingabe == '=');
 
-    printf("%d Einnahmen durchschnittlichem Wert %d Euro", cntE, avgE);
-    printf("%d Einnahmen durchschnittlichem Wert %d Euro", cntA, avgA);
+
+    avgE=eges/cntE;
+    avgA=ages/cntA;
+
+
+    printf("%d Einnahmen durchschnittlichem Wert %d Euro\n", cntE, avgE);
+    printf("%d Einnahmen durchschnittlichem Wert %d Euro\n", cntA, avgA);
 
 
     return 0;
