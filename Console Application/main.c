@@ -34,6 +34,7 @@ int main() {
         switch (eingabe) {
             case 'e':
 
+
                 if (betrag <= 20.00) {
                     guthaben = guthaben + betrag;
                     printf("Gezahlte Steuern: %.2lf Euro", steuer);
@@ -44,7 +45,7 @@ int main() {
                     zs = betrag;
                     steuer = (zs - 20) * 0.1;
                     steuerges += steuer;
-                    betrag = betrag - steuer;
+                    betrag -= steuer;
                     guthaben += betrag;
                     printf("Gezahlte Steuern: %.2lf Euro", steuer);
                     printf("\n");
@@ -53,9 +54,9 @@ int main() {
                 if (betrag > 50.00 && betrag <= 200.00) {
                     zs = betrag;
                     steuer = ((zs - 50) * 0.2) + (30 * 0.1);
-                    betrag = betrag - steuer;
-                    guthaben = guthaben + betrag;
-                    steuerges = steuerges + steuer;
+                    betrag -= steuer;
+                    guthaben += betrag;
+                    steuerges += steuer;
 
                     printf("Gezahlte Steuern: %.2lf Euro", steuer);
                     printf("\n");
@@ -63,8 +64,8 @@ int main() {
                 if (betrag > 200) {
                     zs = betrag;
                     steuer = ((zs - 200) * 0.4) + (150 * 0.2) + (30 * 0.1);
-                    betrag = betrag - steuer;
-                    guthaben = guthaben + betrag;
+                    betrag -= steuer;
+                    guthaben += betrag;
                     steuerges += steuer;
 
                     printf("Gezahlte Steuern: %.2lf Euro", steuer);
@@ -72,17 +73,17 @@ int main() {
 
                 }
                 steuer = 0;
-                eges = eges + betrag;
+                eges += betrag;
                 cntE++;
 
                 break;
             case 's':
 
 
-                guthaben = guthaben + betrag;
+                guthaben += betrag;
 
 
-                eges = eges + betrag;
+                eges += betrag;
                 cntE++;
                 break;
 
@@ -92,8 +93,8 @@ int main() {
                     printf("\n");
                     continue;
                 }
-                guthaben = guthaben - betrag;
-                ages = ages + betrag;
+                guthaben -= betrag;
+                ages += betrag;
                 cntA++;
                 break;
 
