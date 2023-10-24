@@ -1,63 +1,69 @@
 #include <stdio.h>
 
 
+int encode(int h, int m) {
 
-
-
-
-int encode(int h, int m){
-    h = h * 100 + m;
+    return h * 100 + m;
 
 
 }
-int read(){
 
+int read() {
+    int h, m;
     printf("hours: ");
-    scanf("%02d");
+    scanf("%02d", &h);
     printf("minutes: ");
-    scanf("%02d");
-   return printf("%04d");
+    scanf("%02d", &m);
 
-}
-int hours(int t){
-
-t = t/100;
-
+    return encode(h, m);
 
 }
 
-int minutes(int t){
+int hours(int t) {
 
-    t = t % 100;
+    return t / 100;
 
 
 }
 
-void print(int t){
+int minutes(int t) {
 
+    return t % 100;
 
-printf("%d", t);
 
 }
 
-int add(int t1, int t2){
+void print(int t) {
 
-    if (t1+t2 > 59)
-        t1 + 100;
 
-    if (t1+t2 > 2300)
-        t1 - 2400;
+    printf("%02d:%02d", hours(t),minutes(t));
 
 }
 
-int total_minutes(int t){
-t = t /100 * 60;
+int add(int t1, int t2) {
 
+    int min1 = minutes(t1);
+    int min2 = minutes(t2);
+    int summemin = min1 + min2;
+
+    int summehours = hours(t1) + hours(t2);
+
+    if (summemin > 59) {
+        summehours++;
+        summemin -= 60;
+    }
+
+    if (summehours > 23)
+      summehours -= 24;
+
+
+return encode (summehours, summemin);
 }
 
+int total_minutes(int t) {
+    return hours(t) * 60 + minutes(t);
 
-
-
+}
 
 
 /* D O N T   T O U C H   T H I S */
@@ -104,8 +110,8 @@ int main() {
     /* Input */
     int num;
     /* List of all available tests */
-    void (*tests[])() = { Test_1, Test_2, Test_3, Test_4, Test_5, Test_6 };
-    int num_of_tests = (int)(sizeof(tests) / sizeof(void (*)()));
+    void (*tests[])() = {Test_1, Test_2, Test_3, Test_4, Test_5, Test_6};
+    int num_of_tests = (int) (sizeof(tests) / sizeof(void (*)()));
 
     /* Read test number */
     printf("Test #: ");
