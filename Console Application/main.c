@@ -1,24 +1,66 @@
 #include <stdio.h>
 
 
-/* D O N T   T O U C H   T H I S */
+
+
+
 
 int encode(int h, int m){
-    printf("%2d:%2d",h,m);
-
-}
-int read(int h, int m){
-    scanf("%2d%2d",h,m);
-
-    printf("hours: %d\n",h);
-    printf("minutes: %d\n");
+    h = h * 100 + m;
 
 
 }
+int read(){
+
+    printf("hours: ");
+    scanf("%02d");
+    printf("minutes: ");
+    scanf("%02d");
+   return printf("%04d");
+
+}
+int hours(int t){
+
+t = t/100;
+
+
+}
+
+int minutes(int t){
+
+    t = t % 100;
+
+
+}
+
+void print(int t){
+
+
+printf("%d", t);
+
+}
+
+int add(int t1, int t2){
+
+    if (t1+t2 > 59)
+        t1 + 100;
+
+    if (t1+t2 > 2300)
+        t1 - 2400;
+
+}
+
+int total_minutes(int t){
+t = t /100 * 60;
+
+}
 
 
 
 
+
+
+/* D O N T   T O U C H   T H I S */
 void Test_1() {
     int h, m;
     printf("h: ");
@@ -79,7 +121,7 @@ int main() {
         printf("Invalid test number!");
     }
 
->>>>>>> Stashed changes
     return 0;
 }
+
 
