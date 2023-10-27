@@ -1,56 +1,58 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #define MAX 80
 
 
+void cntwords(int *array, int letternumber) {
 
-
-char ueberpruefung (char *string, int size) {
-
-}
-
-void cntwords(int size, int letternumber){
-    int array[size];
-    array[letternumber] += 1;
+    array[letternumber - 1] += 1;
 }
 
 
-void cntletter(char *string, int size, int startwert){
-    int cnt;
-    int i = startwert;
-    for (i; i <= size; i++)
+int cntletter(char *string, int size, int startwert) {
+    int cnt = 0;
+
+    for (int i = startwert; i <= size; i++) {
         cnt++;
-        if (string[i] == ' ' || string [i] == '.' )
-            cntwords(size, cnt);
+        if (string[i] == ' ' || string[i] == '.')
+            break;
 
-
-
+    }
+    return cnt;
 }
 
 
 int main() {
     char string[MAX];
 
-    int cnt;
+    int cnt = 0;
     char letter;
-    for (int n = 0; n <= MAX; ++n) {
+    for (int i = 0; i <= MAX; ++i) {
 
         scanf("%c", &letter);
-        string[n] = letter;
+        string[i] = letter;
 
-        if (string[n] == '.')
-
+        if (string[i] == '.') {
             break;
+
+        }
 
 
         cnt++;
     }
-    for (int i; i <= cnt; i++) {
-        if (string[i] == ' ' || string[i] == '.')
-            cntletter(string, cnt, i);
+    int array[cnt];
+
+    for (int i = 0; i <= cnt; i++) {
+        if (string[i] == ' ' || string[i] == '.') {
+            cntwords(array, cntletter(string, cnt, i));
+        }
     }
 
-    for (int i; i <= cnt; i++)
-        if (string [i] != 0)
-            printf("Length %d: %d", i, string[i]);
+    for (int i = 0; i <= cnt; i++)
+        if (array[i - 1] != 0)
+            printf("Length %d: %d\n", i, string[i]);
+
+    return 0;
+
 }
