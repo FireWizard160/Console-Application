@@ -75,11 +75,16 @@ void addNewSongToTopFive(Song songs[MAX_LENGTH], Song song, int position){
 }
 
 void exchangePosition(Song songs[MAX_LENGTH], int positionSong1, int positionSong2){
-Song *temp = &songs[positionSong1-1];
+
+    Song temp = songs[positionSong1-1];
+    songs[positionSong1-1] = songs[positionSong2-1];
+    songs[positionSong2-1] = temp;
+
+   /* Song *temp = &songs[positionSong1-1];
 
 songs[positionSong1-1] = songs[positionSong2-1];
 songs[positionSong2-1] = *temp;
-
+*/
 
 
 
