@@ -62,7 +62,6 @@ int temp = 0;
         if (schedule[i].time + schedule[i].duration > schedule[i + 1].time) {
             printf("\nEntweder Termin %d oder Termin %d sollte abgesagt werden", i + 1, i + 2);
             temp++;
-            break;
         }
 
 
@@ -110,11 +109,13 @@ struct appointment createAppointment() {
         printf("\nGib einen Typen ein: Freunde (f), Geschaeftlich (b), Pause (p): ");
         scanf(" %c", &newAppointment.type);
 
-        if (newAppointment.type == 'f' || newAppointment.type == 'b' || newAppointment.type == 'p') {
-        } else {
-            printf("\nUngueltige Eingabe!");
-            continue;
+        if (newAppointment.type != 'f' && newAppointment.type != 'b' && newAppointment.type != 'p') {
+
+                printf("\nUngueltige Eingabe!");
+                continue;
+
         }
+
         break;
     }
 
