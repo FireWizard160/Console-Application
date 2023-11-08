@@ -19,7 +19,7 @@ struct appointment {
 
 
 };
-
+//Wandelt den Type in die ausgeschriebene Version um
 char *getString(enum type appointmentType) {
     switch (appointmentType) {
 
@@ -37,11 +37,15 @@ char *getString(enum type appointmentType) {
 return 0;
 }
 
-void printAppointments(struct appointment *schedule, int length) {
 
+//Printet alle aktuellen Termine
+void printAppointments(struct appointment *schedule, int length) {
+    // Wenn keine Termine vorhanen sind soll die Funktion nichts machen
     if (length == 0)
         return;
 
+
+    //Printet alle Termine im array von 0 bis zur aktuellen Länge
     for (int i = 0; i < length; ++i) {
             printf("\n%d: %s: %d Uhr, Dauer %dh", i + 1, getString(schedule[i].type), schedule[i].time,
                    schedule[i].duration);
@@ -54,8 +58,9 @@ void printInformation(struct appointment *schedule, int length) {
 
 int temp = 0;
     for (int i = 0; i < length - 1; ++i) {
+        //Kontrolliert ob sich Termine überschneiden
         if (schedule[i].time + schedule[i].duration > schedule[i + 1].time) {
-            printf("\nEntweder Termin %d oder Termin %d sollte abgesagt werden", i, i + 1);
+            printf("\nEntweder Termin %d oder Termin %d sollte abgesagt werden", i + 1, i + 2);
             temp++;
             break;
         }
@@ -66,7 +71,7 @@ int temp = 0;
     if (temp == 0) {
         printf("\nDer Kalender hat keine Kollisionen!");
     }
-    temp = 0;
+
 
     int cntPause = 0;
     int cntGeschaeftstermin = 0;
@@ -82,13 +87,14 @@ int temp = 0;
 
         if (schedule[i].type == Geschaeftlicher_Termin) {
             cntGeschaeftstermin++;
+            //Kontrolliert ob 2 Geschäftstermine hintereinander liegen --> printet es wenn das der Fall ist
             if (i != length - 1 && schedule[i+1].type == Geschaeftlicher_Termin){
                 printf("\nDie Termine %d und %d liegen hintereinander und sind beide Geschaeftstermine.", i + 1, i + 2);
 
             }
         }
     }
-
+    //printet Anzahl der jeweiligen Termine
     printf("\nSie haben %d Geschaeftstermin(e), %d Termin(e) mit Freunden und %d Pause(n) in Ihrem Kalender.",
            cntGeschaeftstermin, cntTerminFreunde, cntPause);
 
@@ -155,7 +161,7 @@ void addAppointment(struct appointment *schedule, int *length) {
 
 
     for (int i = *length; i >= 0; --i) {
-        if (i == 0 || temp.time >= schedule[i - 1].time){
+        if (i == 0 || temp.time > schedule[i - 1].time){
 
 
             schedule [i] = temp;
@@ -257,8 +263,5 @@ int main() {
                 printf("\nUngueltige Eingabe!");
                 continue;
         }
-
     }
-
-
 }
