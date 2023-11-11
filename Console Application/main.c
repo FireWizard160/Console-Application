@@ -1,14 +1,10 @@
 #include <stdio.h>
-#include <stdlib.h>
-
 
 enum type {
 
-    Termin_mit_freunden = 'f',
-    Geschaeftlicher_Termin = 'b',
-    Pause = 'p',
-
-
+    friends = 'f',
+    business = 'b',
+    pause = 'p',
 };
 
 struct appointment {
@@ -16,27 +12,27 @@ struct appointment {
     char type;
     int time;
     int duration;
-
-
 };
+
+
 //Wandelt den Type in die ausgeschriebene Version um
+
 char *getString(enum type appointmentType) {
     switch (appointmentType) {
 
-        case Termin_mit_freunden:
+        case friends:
             return "Freunde";
             break;
-        case Geschaeftlicher_Termin:
+        case business:
             return "Geschaeftlich";
             break;
-        case Pause:
+        case pause:
             return "Pause";
             break;
     }
 
 return 0;
 }
-
 
 //Printet alle aktuellen Termine
 void printAppointments(struct appointment *schedule, int length) {
@@ -77,17 +73,18 @@ int temp = 0;
     int cntTerminFreunde = 0;
 
     for (int i = 0; i < length; ++i) {
-        if (schedule[i].type == Pause)
+        if (schedule[i].type == pause)
             cntPause++;
 
-        if (schedule[i].type == Termin_mit_freunden)
+        if (schedule[i].type == friends)
             cntTerminFreunde++;
 
 
-        if (schedule[i].type == Geschaeftlicher_Termin) {
+        if (schedule[i].type == business) {
             cntGeschaeftstermin++;
+
             //Kontrolliert ob 2 Geschäftstermine hintereinander liegen --> printet es wenn das der Fall ist
-            if (i != length - 1 && schedule[i+1].type == Geschaeftlicher_Termin){
+            if (i != length - 1 && schedule[i+1].type == business){
                 printf("\nDie Termine %d und %d liegen hintereinander und sind beide Geschaeftstermine.", i + 1, i + 2);
 
             }
