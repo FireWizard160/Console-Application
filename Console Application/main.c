@@ -7,11 +7,13 @@ int* swapElements(int array[], int suffixStart, int length, int variableSwap) {
     int temp;
 
     for (int i = suffixStart; i < length; ++i) {
+
+
         if (suffixStart + 1 == length){
             temp = array[variableSwap];
             array[variableSwap] = array[i];
             array[i] = temp;
-            break;
+            return array;
 
         }
 
@@ -20,21 +22,27 @@ int* swapElements(int array[], int suffixStart, int length, int variableSwap) {
             temp = array[variableSwap];
             array[variableSwap] = array[i];
             array[i] = temp;
-            break;
+            return array;
         }
 
+
     }
+
+    temp = array[variableSwap];
+    array[variableSwap] = array[length - 1];
+    array[length - 1] = temp;
     return array;
+
 }
 
 int* sortSuffix(int array[], int length, int suffixStart, int suffixLength) {
 
     int temp;
 
-    for (int i = suffixStart, j = length - 1; i <= length - 1 - suffixStart; ++i, j--) {
-        temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+    for (int i = 0; i <  (length - suffixStart) / 2; ++i) {
+        temp = array[suffixStart + i];
+        array[suffixStart + i] = array[length - 1 - i];
+        array[length - 1 - i] = temp;
 
 
     }
@@ -66,20 +74,27 @@ int main() {
     }
 
     for (int i = length - 1; i >= 0; --i) {
+        if (i == 0){
+            printArray(sortSuffix(array, length, suffixStart, suffixLength),length);
+            return 0;
+        }
 
-
-        if ( i - 1  == 0 ||array[i - 1] < array[i]) {
+        if (array[i - 1] < array[i]) {
             suffixStart = i;
             variableSwap = suffixStart - 1;
             suffixLength = length - i;
 
             break;
         }
+
     }
 
 
-    printArray(sortSuffix(swapElements(array,suffixStart,length, variableSwap), length, suffixStart, suffixLength),length);
 
+
+
+    printArray(sortSuffix(swapElements(array,suffixStart,length, variableSwap), length, suffixStart, suffixLength),length);
+    return 0;
 
 
 
