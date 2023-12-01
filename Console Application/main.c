@@ -1,70 +1,58 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 struct node {
-    int element;
-    struct node* next;
-};
+    struct node *next;
+    int value;
+} typedef node;
 
-struct node* addBefore(int value, struct node* head)
-{
-    struct node* newHead =
-            (struct node*)malloc(sizeof(struct node));
-    newHead->element = value;
-    newHead->next = head;
-    return newHead;
+node *createNode(int value) {
+    node *newNode = (node *) malloc(sizeof(node));
+    newNode->value = value;
+    newNode->next = NULL;
+    return newNode;
+}
+
+node *addAfter(node* newNode, node* list){
+    newNode->next = NULL;
+    list->next = newNode;
+    return newNode;
+}
+
+void freeMemory(node *list){
+    if (list == NULL)
+        return;
+    freeMemory(list->next);
+
+    free(list);
 
 }
 
+int main() {
+    node *list = NULL;
+    int value = 0;
+
+    while (1){
+        scanf("%d",&value);
+        if(value == 0)
+            break;
+
+
+        if (list == NULL){
+            list = createNode(value);
+        } else {
+            addAfter(createNode(value),list);
+        }
 
 
 
-void size(struct node* head)
-{
-
-    struct node* temp = head;
-    while(temp != NULL)
-    {
-        printf("%d ",temp->element);
-        temp = temp->next;
     }
 
-}
+    for (node* n = list; n != NULL; n = n->next) {
+        printf("%d ",n->value);
 
-void freeList(struct node* head) {
-    struct node* temp = head;
-    while (head != NULL) {
-        head = head->next;
-        free(temp);
-        temp = head;
     }
-}
+    freeMemory(list);
 
-
-
-int main()
-{
-
-        struct node* head = NULL;
-        int value;
-
-
-        do {
-
-
-            scanf("%d",&value);
-            if (value != 0)
-                head = addBefore(value, head);
-
-        }while (value != 0);
-
-
-
-
-        size(head);
-        freeList(head);
-        return 0;
-
-
+    return 0;
 }
