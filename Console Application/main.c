@@ -14,8 +14,20 @@ node *createNode(int value) {
 }
 
 node *addAfter(node* newNode, node* list){
-    newNode->next = NULL;
-    list->next = newNode;
+
+
+    for (node* n = list; n != NULL; n = n->next) {
+        if (n->next == NULL){
+            n->next = newNode;
+            break;
+        }
+
+
+
+    }
+
+
+
     return newNode;
 }
 
@@ -34,8 +46,10 @@ int main() {
 
     while (1){
         scanf("%d",&value);
-        if(value == 0)
+        if(value == 0) {
             break;
+        }
+
 
 
         if (list == NULL){
