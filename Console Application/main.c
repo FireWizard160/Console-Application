@@ -38,7 +38,7 @@ void freeMemory(node *list) {
 
 }
 
-void printlist(node *list) {
+void printList(node *list) {
 
     for (node *n = list; n != NULL; n = n->next) {
         printf("%d ", n->value);
@@ -70,7 +70,7 @@ int main() {
     }
 
 
-    printlist(list);
+    printList(list);
 
 
     while (1) {
@@ -85,37 +85,25 @@ int main() {
         }
 
         if (value == 0) {
+            node* temp = list;
             list = list->next;
-            printlist(list);
+            printList(list);
             listsize--;
+            free(temp);
             continue;
         }
 
-        node *temp = list;
-        node *previous = NULL;
-        temp = list;
-
-
-        if (value == listsize) {
-            for (int i = 0; i < value - 1 && temp != NULL; ++i) {
-                previous = temp;
-                temp = temp->next;
-            }
-
-        } else {
-
-            for (int i = 0; i < value && temp != NULL; ++i) {
-                previous = temp;
-                temp = temp->next;
-
-
-            }
-            previous->next = temp->next;
-
+        node* n = list;
+        for (int i = 0; i < value - 1; ++i, n = n->next) {
         }
+        node *temp2 = n->next;
+        n->next = n->next->next;
+        free(temp2);
 
 
-        printlist(list);
+
+
+        printList(list);
         listsize--;
 
 
