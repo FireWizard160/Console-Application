@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 enum genre {
     horror = '1',
@@ -63,13 +64,13 @@ void freeMemory(bookNode *list) {
 char *getString(enum genre genreType) {
     switch (genreType) {
 
-        case 1:
+        case horror:
             return "Horror";
-        case 2:
+        case adventure:
             return "Abenteuer";
-        case 3:
+        case romance:
             return "Romantic";
-        case 4:
+        case nonfiction:
             return "Sachbuch";
 
     }
@@ -85,9 +86,9 @@ book insertBook() {
     struct book newBook;
     newBook.title[31] = '\0';
     int input = 0;
-    char charInput;
 
-    int checkinput = 0;
+
+
 
     while (1) {
         printf("\nGeben Sie den Titel ein: ");
@@ -101,15 +102,15 @@ book insertBook() {
                 continue;
 
             }
-        for (int i = 0; i < 32; ++i) {
-            if (newBook.title[i] == '\n' && i != 0){
+
+        for (int i = 0; i <= strlen(newBook.title); ++i) {
+            if (newBook.title[i] == '\0' && i != 0){
                 newBook.title[i] = '\0';
                 break;
             }
         }
 
-
-
+        break;
 
 
 
