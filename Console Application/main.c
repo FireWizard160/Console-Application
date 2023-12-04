@@ -34,7 +34,19 @@ bookNode *createBookNode(book newBook) {
     return newBookNode;
 }
 
-bookNode *addBefore(bookNode *newBookNode, bookNode *inventoryList) {
+bookNode *addBookBefore(bookNode *newBookNode, bookNode *inventoryList) {
+    newBookNode->next = inventoryList;
+    return newBookNode;
+}
+
+bookNode *createborrowNode(book newBook) {
+    bookNode *newBookNode = (bookNode *) malloc(sizeof(bookNode));
+    newBookNode->book = newBook;
+    newBookNode->next = NULL;
+    return newBookNode;
+}
+
+bookNode *addBorrowBefore(bookNode *newBookNode, bookNode *inventoryList) {
     newBookNode->next = inventoryList;
     return newBookNode;
 }
@@ -80,32 +92,27 @@ book insertBook() {
     while (1) {
         printf("\nGeben Sie den Titel ein: ");
 
-        for (int i = 0; i < 32; ++i) {
 
-            scanf("%c", &newBook.title[i]);
+            scanf("%s", newBook.title);
 
-            if (i == 31 && newBook.title[i] != '\n'){
+            if (newBook.title[31] != '\0'){
                 printUngueltigeEingabe();
-                checkinput = 1;
-                break;
+
+                continue;
 
             }
-
+        for (int i = 0; i < 32; ++i) {
             if (newBook.title[i] == '\n' && i != 0){
                 newBook.title[i] = '\0';
-                checkinput = 0;
                 break;
             }
-
-
         }
 
-        if (checkinput == 0){
-            break;
-        }
-        if (checkinput == 1){
-            continue;
-        }
+
+
+
+
+
 
     }
 
@@ -149,14 +156,6 @@ book insertBook() {
 
 }
 
-void borrowBook() {
-
-}
-
-void returnBook() {
-
-}
-
 void printList(bookNode inventoryList) {
     int i = 0;
     for (bookNode *n = &inventoryList; n != NULL; n = n->next) {
@@ -177,13 +176,44 @@ void printList(bookNode inventoryList) {
 
 }
 
+void borrowBook(bookNode *inventoryList, int inventoryListSize) {
+    int borrowIndex = 0;
+
+    if (inventoryList == NULL){
+        printf("\nEs sind keine Buecher im Inventar vorhanden.");
+        return;
+    }
+
+    printList(*inventoryList);
+
+    while (1){
+        printf("\nWelchen Titel moechten Sie leihen? (1-%d): ",inventoryListSize);
+        scanf("%d",&borrowIndex);
+
+        if (borrowIndex < 1 || borrowIndex > inventoryListSize){
+            printUngueltigeEingabe();
+            continue;
+        }
+
+        printf("\nGeben Sie Ihren Namen ein: ");
+
+        break;
+    }
+}
+
+void returnBook() {
+
+}
+
+
+
 void printListInOrder() {
 
 }
 
 int main() {
     struct bookNode *inventoryList = NULL;
-
+    int inventoryListSize = 0;
 
     char input;
 
@@ -194,12 +224,13 @@ int main() {
 
         switch (input) {
             case 'n':
-                inventoryList = addBefore(createBookNode(insertBook()), inventoryList);
+                inventoryList = addBookBefore(createBookNode(insertBook()), inventoryList);
+                inventoryListSize++;
 
                 break;
 
             case 'b':
-                borrowBook();
+                borrowBook(inventoryList, inventoryListSize);
 
 
                 break;
