@@ -75,20 +75,37 @@ book insertBook() {
     int input = 0;
     char charInput;
 
+    int checkinput = 0;
+
     while (1) {
         printf("\nGeben Sie den Titel ein: ");
 
         for (int i = 0; i < 32; ++i) {
+
             scanf("%c", &newBook.title[i]);
+
+            if (i == 31 && newBook.title[i] != '\n'){
+                printUngueltigeEingabe();
+                checkinput = 1;
+                break;
+
+            }
+
             if (newBook.title[i] == '\n' && i != 0){
                 newBook.title[i] = '\0';
+                checkinput = 0;
                 break;
             }
 
+
         }
 
-
-        break;
+        if (checkinput == 0){
+            break;
+        }
+        if (checkinput == 1){
+            continue;
+        }
 
     }
 
@@ -101,6 +118,8 @@ book insertBook() {
         }
         newBook.genre = input;
         break;
+
+
     }
 
     while (1) {
