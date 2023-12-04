@@ -48,9 +48,21 @@ void freeMemory(bookNode *list) {
 
 }
 
-char getString (int inventoryList){
-    
+char *getString(enum genre genreType) {
+    switch (genreType) {
 
+        case 1:
+            return "Horror";
+        case 2:
+            return "Abenteuer";
+        case 3:
+            return "Romantic";
+        case 4:
+            return "Sachbuch";
+
+    }
+
+    return 0;
 }
 
 void printUngueltigeEingabe() {
@@ -136,10 +148,10 @@ void printList(bookNode inventoryList) {
             if (n->book.title[j] == '\0')
                 break;
 
-            printf(" %c", n->book.title[j]);
+            printf("%c", n->book.title[j]);
 
         }
-        printf(", &d (%d) ", getString(n->book.genre), n->book.year);
+        printf(", %s (%d) ",getString(n->book.genre), n->book.year);
 
     }
 
