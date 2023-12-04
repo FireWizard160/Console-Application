@@ -2,23 +2,23 @@
 #include <stdlib.h>
 
 enum genre {
-    horror = 'h',
-    adventure = 'a',
-    romance = 'r',
-    nonfiction = 'n',
+    horror = '1',
+    adventure = '2',
+    romance = '3',
+    nonfiction = '4',
 } typedef genre;
 
 struct book {
     char title[32];
-    enum genre;
+    int genre;
     int year;
     int amount;
-};
+}typedef book;
 
 
 struct bookNode {
     struct bookNode *next;
-    struct book;
+    book book;
 } typedef bookNode;
 
 struct borrowNode {
@@ -27,24 +27,17 @@ struct borrowNode {
     char name[32];
 } typedef borrowNode;
 
-bookNode *createBookNode(int value) {
+bookNode *createBookNode(book newBook) {
     bookNode *newNode = (bookNode *) malloc(sizeof(bookNode));
-    //newNode->book = value;
+    newNode->book = newBook;
     newNode->next = NULL;
     return newNode;
 }
 
-bookNode *addBefore(bookNode *newNode, bookNode *list) {
+bookNode *addBefore(bookNode *newNode, bookNode *inventorylist) {
 
 
-    for (bookNode *n = list; n != NULL; n = n->next) {
-        if (n->next == NULL) {
-            n->next = newNode;
-            break;
-        }
 
-
-    }
 
 
     return newNode;
@@ -88,7 +81,7 @@ bookNode *insertBook() {
             printUngueltigeEingabe();
             continue;
         }
-        newBook.
+        newBook.genre = input;
         break;
     }
 
@@ -100,7 +93,7 @@ bookNode *insertBook() {
             printUngueltigeEingabe();
             continue;
         }
-
+        newBook.year = input;
         break;
     }
 
@@ -112,10 +105,10 @@ bookNode *insertBook() {
             printUngueltigeEingabe();
             continue;
         }
-
+        newBook.amount = input;
         break;
     }
-
+    createBookNode()
 }
 
 void borrowBook() {
