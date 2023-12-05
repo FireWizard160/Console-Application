@@ -3,10 +3,10 @@
 #include <string.h>
 
 enum genre {
-    horror = '1',
-    adventure = '2',
-    romance = '3',
-    nonfiction = '4',
+    horror = 1,
+    adventure = 2,
+    romance = 3,
+    nonfiction = 4,
 } typedef genre;
 
 struct book {
@@ -65,6 +65,15 @@ void freeInventoryMemory(bookNode *inventoryList) {
 
 }
 
+void freeBorrowedBookMemory(borrowNode *borrowedBookList) {
+    if (borrowedBookList == NULL)
+        return;
+    freeBorrowedBookMemory(borrowedBookList->next);
+
+    free(borrowedBookList);
+
+}
+
 char *getString(enum genre genreType) {
     switch (genreType) {
 
@@ -73,7 +82,7 @@ char *getString(enum genre genreType) {
         case adventure:
             return "Abenteuer";
         case romance:
-            return "Romantic";
+            return "Romantik";
         case nonfiction:
             return "Sachbuch";
 
@@ -134,7 +143,7 @@ book insertBook() {
         printf("\nGeben Sie das Erscheinungsjahr ein:");
         scanf("%d", &input);
 
-        if (input < 0) {
+        if (input < 1) {
             printUngueltigeEingabe();
             continue;
         }
@@ -146,7 +155,7 @@ book insertBook() {
         printf("\nGeben Sie ein wieviele Exemplare vorhanden sind: ");
         scanf("%d", &input);
 
-        if (input < 0) {
+        if (input < 1) {
             printUngueltigeEingabe();
             continue;
         }
@@ -176,7 +185,7 @@ void printList(bookNode inventoryList) {
 
     }
 
-
+    printf("\n");
 }
 
 void printBorrowedBookList(borrowNode *borrowedBookList) {
@@ -190,7 +199,7 @@ void printBorrowedBookList(borrowNode *borrowedBookList) {
         printf("%s geliehen von %s ", n->borrowedBook.title, n->borrowedBook.name);
 
     }
-
+    printf("\n");
 
 }
 
@@ -203,7 +212,7 @@ borrowNode *borrowBook(bookNode *inventoryList, int inventoryListSize, borrowNod
     struct borrowedBook newBorrowedBook;
 
     if (inventoryList == NULL) {
-        printf("\nEs sind keine Buecher im Inventar vorhanden.");
+        printf("\n\nEs sind keine Buecher im Inventar vorhanden.");
         return 0;
     }
 
@@ -213,12 +222,15 @@ borrowNode *borrowBook(bookNode *inventoryList, int inventoryListSize, borrowNod
         printf("\nWelchen Titel moechten Sie leihen? (1-%d): ", inventoryListSize);
         scanf("%d", &borrowIndex);
 
-        if (borrowIndex < 1 || borrowIndex > inventoryListSize) {
+        if (borrowIndex < 1 || borrowIndex >= inventoryListSize) {
             printUngueltigeEingabe();
             continue;
         }
 
         bookNode *copyInventoryList = inventoryList;
+
+
+
         for (int i = 0; i < borrowIndex;) {
             if (copyInventoryList->next == NULL && borrowIndex == 1)
                 break;
@@ -227,7 +239,7 @@ borrowNode *borrowBook(bookNode *inventoryList, int inventoryListSize, borrowNod
         }
 
         if (copyInventoryList->book.amount == 0){
-            printf("\nBereits alle Exemplare ausgeliehen!");
+           // printf("\nBereits alle Exemplare ausgeliehen!");
         }
 
         strcpy(newBorrowedBook.title, copyInventoryList->book.title);
@@ -257,16 +269,18 @@ borrowNode *borrowBook(bookNode *inventoryList, int inventoryListSize, borrowNod
 
 
         if(borrowedBookList != NULL){
-            for (borrowNode *n = &borrowedBookList; n != NULL; n = n->next) {
-                if (n->borrowedBook.name == borrowerName && newBorrowedBook.name == n->borrowedBook.name){
+            for (borrowNode *n = borrowedBookList; n != NULL; n = n->next) {
+                if (strcmp(n->borrowedBook.name, borrowerName) == 0 && strcmp(newBorrowedBook.title, n->borrowedBook.title) == 0){
                     printf("\nSie haben diesen Titel bereits ausgeliehen!");
                     checkInput = 1;
                     break;
                 }
             }
+            break;
         }
 
         if (checkInput == 1){
+            printUngueltigeEingabe();
             continue;
         }
 
@@ -290,9 +304,50 @@ borrowNode *borrowBook(bookNode *inventoryList, int inventoryListSize, borrowNod
     return borrowedBookList;
 }
 
-void returnBook(borrowNode *borrowedBookList, bookNode *inventoryList) {
+borrowNode* returnBook(borrowNode *borrowedBookList, bookNode *inventoryList, int borrowedBookListSize) {
+   if (borrowedBookList == NULL){
+       printf("\n\nEs sind keine Titel ausgeliehen!");
+       return borrowedBookList;
+   }
+
+
     printBorrowedBookList(borrowedBookList);
 
+
+   int input = 0;
+   borrowNode *freeNode;
+   borrowNode *copyBorrowedBookList;
+
+    while (1){
+
+        printf("\nWelchen Titel moechten Sie retournieren? (1-%d):", borrowedBookListSize);
+        scanf("%d",&input);
+
+        if (input < 1 || input > borrowedBookListSize){
+            printUngueltigeEingabe();
+            continue;
+        }
+
+        if (input == 1){
+            freeNode = borrowedBookList;
+            borrowedBookList = borrowedBookList->next;
+            free(freeNode);
+
+            inventoryList->book.amount++;
+
+            break;
+        }
+
+        for (int i = 0; i < input; ++i, copyBorrowedBookList = copyBorrowedBookList->next) {
+        }
+
+        freeNode = copyBorrowedBookList->next;
+        copyBorrowedBookList->next = copyBorrowedBookList->next->next;
+        inventoryList->book.amount++;
+        free(freeNode);
+        break;
+    }
+    return borrowedBookList;
 }
 
 
@@ -304,10 +359,12 @@ int main() {
     struct bookNode *inventoryList = NULL;
     struct borrowNode *borrowedBookList = NULL;
     int inventoryListSize = 0;
+    int borrowedBookListSize = 0;
 
     char input;
 
     while (1) {
+
         printf("\nNeues Buch eingeben (n), Buch ausleihen (b), Buch zurueckgeben (r), Buecher auflisten (l), Buecher sortieren (s), Programm beenden (x)");
         printf("\nAuswahl: ");
         scanf(" %c", &input);
@@ -321,12 +378,13 @@ int main() {
 
             case 'b':
                 borrowedBookList = borrowBook(inventoryList, inventoryListSize, borrowedBookList);
-
+                borrowedBookListSize++;
 
                 break;
 
             case 'r':
-                returnBook(borrowedBookList, inventoryList);
+                borrowedBookList = returnBook(borrowedBookList, inventoryList,borrowedBookListSize);
+                borrowedBookListSize--;
 
                 break;
 
@@ -342,6 +400,7 @@ int main() {
 
             case 'x':
                 freeInventoryMemory(inventoryList);
+                freeBorrowedBookMemory(borrowedBookList);
                 return 0;
 
 
