@@ -258,7 +258,6 @@ borrowNode *borrowBook(bookNode *inventoryList, int inventoryListSize, borrowNod
                     return borrowedBookList;
                 }
             }
-
         }
         //checkt ob es noch exemplare von Buch, welches man ausborgen will, vorhanden sind
         if (copyInventoryList->book.amount == 0) {
