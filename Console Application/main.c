@@ -65,7 +65,7 @@ borrowNode *addBorrowBefore(borrowNode *newBorrowNode, borrowNode *borrowedBookL
     return newBorrowNode;
 }
 
-//freet Memory für die Inventar Liste
+//gibt Inventarliste frei
 void freeInventoryMemory(bookNode *inventoryList) {
     if (inventoryList == NULL)
         return;
@@ -75,7 +75,7 @@ void freeInventoryMemory(bookNode *inventoryList) {
 
 }
 
-//freet die Ausborgerliste
+//gibt Ausborgerliste frei
 void freeBorrowedBookMemory(borrowNode *borrowedBookList) {
     if (borrowedBookList == NULL)
         return;
@@ -103,7 +103,6 @@ char *getString(enum genre genreType) {
     return 0;
 }
 
-//wollte das nicht dauernd selber schreiben lol
 void printUngueltigeEingabe() {
     printf("\nUngueltige Eingabe!");
 }
@@ -252,8 +251,7 @@ borrowNode *borrowBook(bookNode *inventoryList, int inventoryListSize, borrowNod
                 //Schaue ob der Name und der Titel schon in der Ausborgerliste vorhanden ist
                 //Wenn ja wird Fehldermeldung geprintet und returnt
                 //Ansonsten wird das fertige struct returnt
-                if (strcmp(n->borrowedBook.name, borrowerName) == 0 &&
-                    strcmp(newBorrowedBook.title, n->borrowedBook.title) == 0) {
+                if (strcmp(n->borrowedBook.name, borrowerName) == 0 && strcmp(newBorrowedBook.title, n->borrowedBook.title) == 0) {
                     printf("\nSie haben diesen Titel bereits ausgeliehen!");
                     return borrowedBookList;
                 }
