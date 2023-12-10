@@ -320,7 +320,6 @@ borrowNode * returnBook(borrowNode *borrowedBookList, bookNode *inventoryList, i
             //Amount entsprechend erhöhen wenn Ausborgertitel und Buchtitel gleich sind
             if (strcmp(copyBorrowedBookList->borrowedBook.title, copyInventoryList->book.title) == 0) {
                 copyInventoryList->book.amount++;
-                break;
             }
 
             //borrowedBookList zwischenspeichern um es nicht zu verlieren
@@ -331,7 +330,24 @@ borrowNode * returnBook(borrowNode *borrowedBookList, bookNode *inventoryList, i
             free(freeNode);
             break;
         }
+        //Edgecase letzter Knoten wird gelöscht
+        if (*borrowedBookListSize == input){
+            for (int i = 1; i < input - 1; ++i, copyBorrowedBookList = copyBorrowedBookList->next);
+            freeNode = copyBorrowedBookList->next;
+            copyBorrowedBookList->next = NULL;
 
+            //Iteriert durch die Liste und erhöht amount um eins wenn Richtiger Knoten gefunden worden ist
+            for (; copyInventoryList != NULL; copyInventoryList = copyInventoryList->next) {
+                if (strcmp(freeNode->borrowedBook.title, copyInventoryList->book.title) == 0) {
+                    copyInventoryList->book.amount++;
+                    break;
+                }
+            }
+            free(freeNode);
+            break;
+
+
+        }
         //Iteriert zu dem Knoten den wir löschen wollen
         for (int i = 1; i < input - 1; ++i, copyBorrowedBookList = copyBorrowedBookList->next);
 
@@ -340,7 +356,7 @@ borrowNode * returnBook(borrowNode *borrowedBookList, bookNode *inventoryList, i
 
         //Iteriert durch die Liste und erhöht amount um eins wenn Richtiger Knoten gefunden worden ist
         for (; copyInventoryList != NULL; copyInventoryList = copyInventoryList->next) {
-            if (strcmp(copyBorrowedBookList->borrowedBook.title, copyInventoryList->book.title) == 0) {
+            if (strcmp(freeNode->borrowedBook.title, copyInventoryList->book.title) == 0) {
                 copyInventoryList->book.amount++;
                 break;
             }
