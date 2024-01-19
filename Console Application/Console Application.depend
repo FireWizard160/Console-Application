@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1705680647 source:c:\fh\prozd\console-application\console application\main.c
+	<stdio.h>
+	<stdlib.h>
+

@@ -2,69 +2,82 @@
 #include <stdlib.h>
 
 
-struct node {
-    int element;
-    struct node* next;
+
+struct building{
+
+int index;
+int height;
 };
-
-struct node* addBefore(int value, struct node* head)
-{
-    struct node* newHead =
-            (struct node*)malloc(sizeof(struct node));
-    newHead->element = value;
-    newHead->next = head;
-    return newHead;
-
-}
-
-
-
-
-void size(struct node* head)
-{
-
-    struct node* temp = head;
-    while(temp != NULL)
-    {
-        printf("%d ",temp->element);
-        temp = temp->next;
-    }
-
-}
-
-void freeList(struct node* head) {
-    struct node* temp = head;
-    while (head != NULL) {
-        head = head->next;
-        free(temp);
-        temp = head;
-    }
-}
 
 
 
 int main()
 {
-
-        struct node* head = NULL;
-        int value;
-
-
-        do {
+int input = 0;
+int arraySize = 0;
 
 
-            scanf("%d",&value);
-            if (value != 0)
-                head = addBefore(value, head);
+int building[1000];
 
-        }while (value != 0);
+for(int i = 0; i < 1000; i++){
+    scanf(" %d",&input);
+    if (input == 0){
+       break;
+    }
+
+
+    if(arraySize == 1 || building.height[i] < input){
+       building.index[i] = i;
+    building.height[i] = input;
+    arraySize++;
+
+    } else{
+
+    for(int n = arraySize - 1;n >= 0; n--){
+
+      if(building.height[n] < input){
+        continue;
+
+
+      }
+      building.height[n] = input;
+      building.index[n] = i;
+
+
+
+    }
+
+    }
+
+
+
+    building.index[i] = i;
+    building.height[i] = input;
+    arraySize++;
 
 
 
 
-        size(head);
-        freeList(head);
-        return 0;
+    for(int j = 0; j <= i; j++){
+
+            if(j + 1 < arraySize - 1 ){
+               printf("%d [%d]", array[j], j);
+               break;
+            }
+
+            if(building.height[j] < building.height[j+1] && ){
+            printf("%d [%d]", array[j], j);
+            }
+
+    }
+}
+
+
+
+
+
+
+
 
 
 }
